@@ -6,7 +6,7 @@ import { useStore } from "zustand";
 export default function Cart() {
     const cartStore = useCartStore(); // Renomeando a variável para evitar conflito de nomes
 
-    const handleClick = (e) => {
+    const handleClick = (e: { target: any; }) => {
         // Verifica se o elemento clicado é o próprio carrinho
         const eventTarget = e.target;
         if (eventTarget.closest('.bg-slate-600')) return;
@@ -15,6 +15,7 @@ export default function Cart() {
         cartStore.toggleCart(); // Usando a função toggleCart do useCartStore
     };
 
+    // Exibindo o carrinho
     return (
         <div 
             onClick={handleClick}
@@ -40,6 +41,7 @@ export default function Cart() {
                 2
             </span>
             {
+                // Verifica se o carrinho está aberto
                 cartStore.isOpen && (
                     <div 
                         className='fixed w-full h-screen bg-black/25 left-0 top-0 z-50'>

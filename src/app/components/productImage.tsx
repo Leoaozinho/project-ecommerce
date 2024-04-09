@@ -8,28 +8,38 @@ type ProductImageProps = {
     fill?: boolean;
 }
 
-export default function ProductImage({ product, fill}: ProductImageProps) {
+// Componente para exibir a imagem do produto
+export default function ProductImage({ product, fill }: ProductImageProps) {
+    // Estado para controlar o carregamento da imagem
     const [loading, setLoading] = useState(true);
+
+    // Renderização condicional da imagem
     return fill ? (
+        // Se fill for true, a imagem preencherá o espaço disponível
         <Image 
-        src={product.image}
-        fill
-        alt={product.title}
-        className={`object-cover ${
-            loading ? 'scale-110 blur-3xl grayscale' : 'scale-100 blur-0 grayscale-0'
-        }`}
-        onLoadingComplete={() => setLoading(false)}
+            src={product.image}
+            fill
+            alt={product.title}
+            className={`object-cover ${
+                // Aplica classes condicionais para adicionar efeitos visuais enquanto a imagem está carregando
+                loading ? 'scale-110 blur-3xl grayscale' : 'scale-100 blur-0 grayscale-0'
+            }`}
+            // Callback chamado quando a imagem termina de carregar
+            onLoadingComplete={() => setLoading(false)}
         />
     ) : (
+        // Se fill for false, a imagem terá uma largura e altura específicas
         <Image 
-        src={product.image}
-        width={400}
-        height={700}
-        alt={product.title}
-        className={`object-cover ${
-            loading ? 'scale-110 blur-3xl grayscale' : 'scale-100 blur-0 grayscale-0'
-        }`}
-        onLoadingComplete={() => setLoading(false)}
+            src={product.image}
+            width={400}
+            height={700}
+            alt={product.title}
+            className={`object-cover ${
+                // Aplica classes condicionais para adicionar efeitos visuais enquanto a imagem está carregando
+                loading ? 'scale-110 blur-3xl grayscale' : 'scale-100 blur-0 grayscale-0'
+            }`}
+            // Callback chamado quando a imagem termina de carregar
+            onLoadingComplete={() => setLoading(false)}
         />
     );
 }

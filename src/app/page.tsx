@@ -27,7 +27,10 @@ async function getProducts(): Promise<ProductType[]> {
     })
   );
 
-  return formatedProducts;
+  return formatedProducts.map((product) => ({
+    ...product,
+    title: product.name,
+  }));
 }
 export default async function Home() {
   const products = await getProducts();

@@ -1,4 +1,5 @@
 export type ProductType = {
+    title: string;
     id: string;
     price: number | null;
     name:string;
