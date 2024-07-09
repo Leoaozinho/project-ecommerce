@@ -12,8 +12,7 @@ export default function Cart() {
     };
 
     return (
-        <div 
-            className='flex items-center relative'>
+        <div className='flex items-center relative'>
             <svg 
                 cursor='pointer'
                 onClick={handleCartIconClick}
@@ -35,6 +34,12 @@ export default function Cart() {
             <span className='bg-blue-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center absolute left-3 bottom-3'>
                 {cartStore.cart?.length || 0}
             </span>
+
+            <button 
+                onClick={() => cartStore.toggleCart()} 
+                className='font-bold text-sm text-teal-600'
+            >
+            </button>
                 
             {
                 cartStore.isOpen && <CartDrawer />
