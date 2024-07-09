@@ -1,27 +1,24 @@
 'use client'
 
 import { useCartStore } from "@/store";
-import { useStore } from "zustand";
+import CartDrawer from "./CartDrawer";
 
 export default function Cart() {
-    const cartStore = useCartStore(); // Renomeando a variável para evitar conflito de nomes
+    const cartStore = useCartStore();
 
     const handleClick = (e: { target: any; }) => {
-        // Verifica se o elemento clicado é o próprio carrinho
         const eventTarget = e.target;
-        if (eventTarget.closest('.bg-slate-600')) return;
-
-        // Fecha o carrinho
-        cartStore.toggleCart(); // Usando a função toggleCart do useCartStore
+        if (eventTarget.closest('.cart-drawer')) return;
+        cartStore.toggleCart();
     };
 
-    // Exibindo o carrinho
     return (
         <div 
             onClick={handleClick}
             className='flex items-center relative'>
             <svg 
                 cursor='pointer'
+                onClick={(e) => { e.stopPropagation(); cartStore.toggleCart(); }}
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
                 fill="none"
@@ -38,27 +35,13 @@ export default function Cart() {
                 />   
             </svg>
             <span className='bg-blue-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center absolute left-3 bottom-3'>
-                2
+                {cartStore.cart?.length || 0}
             </span>
+                
             {
-                // Verifica se o carrinho está aberto
-                cartStore.isOpen && (
-                    <div 
-                        className='fixed w-full h-screen bg-black/25 left-0 top-0 z-50'>
-                        <div  
-                            onClick={(e) => e.stopPropagation()}
-                            className='absolute bg-slate-600 right-0 top-0 w-1/3 h-screen p-12 overflow-y-scroll'
-                        >
-                            <h1>Meu Carrinho</h1>
-                            {
-                                cartStore.cart.map((item) => (
-                                    <div key={item.id}>{item.name}</div> // Exibindo o nome do produto
-                                ))
-                            }
-                        </div>
-                    </div>
-                )
+                cartStore.isOpen && <CartDrawer />
             }
         </div>
     );
 }
+
