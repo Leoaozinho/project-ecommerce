@@ -6,19 +6,17 @@ import CartDrawer from "./CartDrawer";
 export default function Cart() {
     const cartStore = useCartStore();
 
-    const handleClick = (e: { target: any; }) => {
-        const eventTarget = e.target;
-        if (eventTarget.closest('.cart-drawer')) return;
+    const handleCartIconClick = (e: { stopPropagation: () => void; }) => {
+        e.stopPropagation();
         cartStore.toggleCart();
     };
 
     return (
         <div 
-            onClick={handleClick}
             className='flex items-center relative'>
             <svg 
                 cursor='pointer'
-                onClick={(e) => { e.stopPropagation(); cartStore.toggleCart(); }}
+                onClick={handleCartIconClick}
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
                 fill="none"
@@ -44,4 +42,3 @@ export default function Cart() {
         </div>
     );
 }
-
