@@ -1,7 +1,6 @@
-import { formatPrice } from "@/lib/utils";
 import { useCartStore } from "@/store";
 import Image from "next/image";
-import { useStore } from "zustand";
+import { formatPrice } from "@/lib/utils";
 
 export default function CartDrawer() {
     const cartStore = useCartStore();
@@ -20,37 +19,48 @@ export default function CartDrawer() {
                 onClick={(e) => e.stopPropagation()}
                 className='absolute bg-slate-600 right-0 top-0 w-1/3 h-screen p-12 overflow-y-scroll cart-drawer'
             >
-                <button
-                onClick={() => cartStore.toggleCart()}
-                className='font-bold text-sm text-teal-600'
-                >
-                    Voltar para loja
-                </button>
+                <h1>Carrinho</h1>
                 <div className='border-t border-gray-400 my-4'></div>
-                {cartStore.cart?.map((item: any) => (
+                {cartStore.cart?.map((item) => (
                     <div key={item.id} className='flex gap-4 py-4'>
                         <Image 
                             src={item.image}
                             alt={item.name}
                             width={120}
                             height={120}
-                            className='objetic-cover w-24' />
-                            <div>
-                                <h2 className='w-42 truncate'>
+                            className='object-cover w-24' 
+                        />
+                        <div className='flex flex-col justify-between'>
+                            <h2 className='w-42 truncate'>
                                 {item.name}
-                                </h2>
-                                <h2>Quantidade: {item.quantity}</h2>
-                                <p className='text-teal-600 text-sm font-bold'>{formatPrice(item.price)}</p>
-                                <button className='py-1 px-2 border rounded-md mt-2 text-sm mr-1' onClick={() => cartStore.addProduct(item)}>
-                                    Adicionar
+                            </h2>
+                            <div className='flex items-center'>
+                                <button 
+                                    className='py-1 px-2 border rounded-md text-sm mr-2' 
+                                    onClick={() => cartStore.addProduct(item)}
+                                >
+                                    +
                                 </button>
-                                <button className='py-1 px-2 border rounded-md mt-2 text-sm mr-1'>
-                                    Remover
+                                <h2 className='mx-2'>
+                                    {item.quantity}
+                                </h2>
+                                <button 
+                                    className='py-1 px-2 border rounded-md text-sm text-red-500 ml-2' 
+                                    onClick={() => cartStore.removeProduct(item.id)}
+                                >
+                                    -
                                 </button>
                             </div>
+                            <p className='text-teal-600 text-sm font-bold'>
+                                {formatPrice(item.price)}
+                            </p>
+                        </div>
                     </div>
                 ))}
             </div>
         </div>
     );
 }
+
+
+
